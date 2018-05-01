@@ -3,8 +3,6 @@
 // @ts-nocheck
 //NO MORE CUSTOMIZATION BELOW THIS POINT
 var top10CarouselJS = document.querySelector('.js-top-ten-carousel'), //CONTAINER FOR ONLY TOP 10 CELLS
-    top10HeaderText = document.querySelector('.js-top-10-header-text'),
-    top10SeeAllText = document.querySelector('.js-top-ten-see-all-text'),
     indexBannerTop = document.getElementById('index-banner-top'), //FIRST BANNER ANCHOR
     indexBannerTopImg = indexBannerTop.getElementsByTagName('img')[0], //FIRST BANNER IMAGE
     indexBannerZone2Banner1 = document.getElementById('index-banner-mid-large'), //SECOND BANNER - LARGE - ANCHOR
@@ -26,7 +24,6 @@ var top10CarouselJS = document.querySelector('.js-top-ten-carousel'), //CONTAINE
     popularProdsCarouselInitial;
 function GetProduct(data) { //CONSTRUCTOR FOR GET PRODUCTS
     //data - Array/Object of individual product data sent from other function
-    //appendTo - Container to append to
     var d = data;
     if (d.hasOwnProperty('brandName')) { //PAGES WITH MORE THAN 1 PRODUCT
         this.productName = d.displayTitle.split(' - ')[0]; //PRODUCT NAME - REMOVE THE FLAVOR FROM THE TOP 10 PAGES
@@ -184,7 +181,7 @@ var utilities = {
     loadBanners : function () {
         var width = window.innerWidth,
             screenw;
-        if (width > 800) {
+        if (width > 1000) {
             screenw = countrySpecificData.desktop;
         } else {
             screenw = countrySpecificData.mobile;
@@ -215,6 +212,7 @@ var utilities = {
         }
         try {
             if (screenw.zone2Banner2URL.length >= 1 || screenw.zone2Banner2Link.length >= 1) {
+                console.log(screenw.zone2Banner2URL);
                 indexBannerZone2Banner2Img.src = screenw.zone2Banner2URL;
                 indexBannerZone2Banner2.setAttribute('href', screenw.zone2Banner2Link);
             } else { //IF THERE IS A USER INPUTED SMALL BANNER URL
@@ -290,6 +288,7 @@ var utilities = {
 };
 (function () { //RUN RIGHT AWAY
     utilities.loadBanners();
+
     document.querySelector('.js-sales-specials-link').setAttribute('href', indexOptions.salesSpecialsURL); //SET URLS FOR SALES/SPECIALS LINKS
     document.querySelector('.js-top-selling-link').setAttribute('href', indexOptions.topSellingURL); //SET TOP SELLING LINKS
     document.querySelector('.js-top-categories-link').setAttribute('href', indexOptions.topCatURL); //SET TOP CATEGORIES LINKS
@@ -357,7 +356,7 @@ document.addEventListener("DOMContentLoaded", function () { //WHEN CONTENT IS LO
                 Object.getOwnPropertyNames(indexOptions.topTenPages).forEach(function (val) { //LOOP THROUGH THE TOP PRODUCTS OBJECT
                     if (val === category) { //IF THE VALUE (E.G. PROTEIN) IS EQUAL TO CLICKED ELEMENT DATA ATTRIBUTE (E.G. PROTEIN)
                         setTimeout(function () { //SET TIME OUT TO GIVE FADE TIME TO TAKE HOLD TO HIDE FLASHING OF ELEMENTS REPLACING
-                           topTenCarouselInitial.destroy();
+                            topTenCarouselInitial.destroy();
                             var holderDiv = document.createElement('div');
                             holderDiv.classList.add('js-top-ten-carousel');
                             document.querySelector('.top__ten').appendChild(holderDiv);

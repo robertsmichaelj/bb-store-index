@@ -42,11 +42,11 @@
 /*FONTS, ETC*/
 .index h5 {
   color: #919191;
-  font: 100 16px/16px ProximaNova, ProximaNovaReg, arial, sans-serif;
+  font: 100 16px/16px Helvetica Neue, Helvetica, Arial, sans-serif;
   margin-bottom: 8px;
 }
 .index p {
-  font: 100 15px/17px ProximaNova, ProximaNovaReg, arial, sans-serif;
+  font: 100 15px/17px Arial, Helvetica Neue, Helvetica, sans-serif;
   margin-bottom: 8px;
 }
 .index a {
@@ -78,60 +78,10 @@
 .ban__link__small {
   width: 27%;
 }
-/*CAROUSEL BUTTONS*/
-.tns-controls {
-  overflow: hidden;
-}
-.index .tns-controls button {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  z-index: 5;
-  border: none;
-  background: #FFF;
-  background-position: center;
-  background-size: 22px;
-  background-repeat: no-repeat;
-  width: 30px;
-  padding: 0;
-}
-.index .tns-controls button:nth-of-type(1) {
-  left: 0;
-  background-image: url('https://www.bodybuilding.com/images/lpimages/optimization/prev.png');
-}
-.index .tns-controls button:nth-of-type(2) {
-  right: 0;
-  width: 31px;
-  background-image: url('https://www.bodybuilding.com/images/lpimages/optimization/next.png');
-}
-.index .tns-controls button:focus {
-  outline: 0;
-  outline-color: #FFF;
-}
-.tns-nav {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%);
-}
-.tns-nav button {
-  border-radius: 100px;
-  height: 10px;
-  width: 10px !important;
-  max-width: 10px;
-  max-height: 10px;
-  border: 1px solid #c8c8c8;
-  padding: 0;
-  margin: 0 5px;
-}
-.tns-nav .tns-nav-active {
-  background: #5a5a5a;
-  border: 1px solid #5a5a5a;
-}
 /*SECTION HEADER*/
 .index .section-header {
   color: #232323 !important;
-  font: 100 26px/26px ProximaNova, ProximaNovaReg, arial, sans-serif;
+  font: 300 26px/26px Helvetica Neue, Helvetica, Arial, sans-serif;
   text-align: left;
   margin-bottom: 10px;
   margin-top: 0;
@@ -312,13 +262,13 @@
 .index .product .product__name {
   margin: 2px 0 0 0;
   color: #00aeef;
-  font: 100 15px/20px ProximaNova, ProximaNovaReg, arial, sans-serif !important;
+  font: 100 15px/20px Arial, Helvetica Neue, Helvetica, sans-serif !important;
   max-width: 180px;
   transition: color .3s;
   min-height: 40px;
 }
 .index .product .product__brand {
-  font: 400 12px/14px ProximaNova, ProximaNovaReg, arial, sans-serif !important;
+  font: 400 12px/14px Arial, Helvetica Neue, Helvetica, sans-serif !important;
   color: #5a5a5a !important;
   margin: 2px 0 0 !important;
 }
@@ -497,11 +447,11 @@
 .index .index__by__category h5 {
   margin: 0 0 16px;
   color: #919191;
-  font: 100 19px/19px ProximaNova, ProximaNovaReg, arial, sans-serif !important;
+  font: 100 19px/19px Arial, Helvetica Neue, Helvetica, sans-serif !important;
 }
 .index .index__by__category a {
   color: #424242;
-  font: 100 16px/22px ProximaNova, ProximaNovaReg, arial, sans-serif;
+  font: 100 16px/22px Arial, Helvetica Neue, Helvetica, sans-serif;
   margin: 2px 0;
   -webkit-transition: color .4s;
   transition: color .4s;
@@ -537,6 +487,9 @@
 .product__mobile-click-target {
   pointer-events: auto !important;
 }
+.Wr__body {
+    background-color: #FFF !important;
+}
 /* ----------------------------  MEDIA QUERY ------------------------------ */
 @media screen and (max-width: 1300px) {
   .index .index--max-width {
@@ -567,9 +520,6 @@
   }
   .index .index__banner-one {
     margin-top: 0;
-  }
-  .index .tns-controls button {
-    display: none !important;
   }
   .index .index--max-width {
     padding: 0 10px;
@@ -738,7 +688,7 @@
   .index .ban__link__small {
     width: 100%;
     margin: 20px auto 0px;
-    display: none; /*REMOVE WHEN SDOW BANNER IS PROVIDED*/
+
   }
   .index .ban__link__large {
     width: 100%;
@@ -840,7 +790,7 @@
     margin-bottom: 7px;
   }
   .index .section-header {
-    font: 100 22px/26px ProximaNova, ProximaNovaReg, arial, sans-serif;
+    font: 100 22px/26px Arial, Helvetica Neue, Helvetica, sans-serif;
     margin: 10px 0;
     width: auto;
     padding: 0;
@@ -917,13 +867,13 @@
     margin-left: auto;
   }
   .index .section-header {
-    font: 100 20px/26px ProximaNova, ProximaNovaReg, arial, sans-serif;
+    font: 100 20px/26px Arial, Helvetica Neue, Helvetica, sans-serif;
   }
 }
 /* ----------------------------  MEDIA QUERY ------------------------------ */
 @media screen and (max-width: 400px) {
   .index .section-header {
-    font: 300 17px/19px ProximaNova, ProximaNovaReg, arial, sans-serif;
+    font: 300 17px/19px Arial, Helvetica Neue, Helvetica, sans-serif;
     text-transform: uppercase;
   }
   .index .carousel__categories__inner a {
