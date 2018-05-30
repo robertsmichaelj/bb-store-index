@@ -1,9 +1,79 @@
-/*jslint devel: true, nomen: true, sloppy: true, browser: true, regexp: true*/
-/*global $*/
-// @ts-nocheck
+var indexOptions = {
+    topTenPages: { //TOP TEN CAROUSEL ITEMS
+        protein: {
+            viewAllName: "Protein Powders", //TOP 10 PAGE TYPE
+            source: "/store/best-protein-powders.html", //STORE URL OF TOP 10 PAGE
+            viewAll: "/store/protein.htm", //VIEW ALL OF PRODUCT TYPE LINK
+            addProd: "" //IF WANT TO REPLACE LAST PRODUCT IN TOP 10 WITH ANOTHER - PRODUCT URL HERE
+        },
+        preworkout: {
+            viewAllName: "Pre-Workouts",
+            source: "/store/best-pre-workout-supplements.html",
+            viewAll: "/store/goalpreworkout.htm",
+            addProd: ""
+        },
+        aminoacids: {
+            viewAllName: "Amino Acids &amp; BCAAs",
+            source: "/store/best-amino-acid-supplements.html",
+            viewAll: "/store/goalamino.htm",
+            addProd: "/store/bodybuilding-com/signature-bcaa.html"
+        },
+        postworkout: {
+            viewAllName: "Post Workouts",
+            source: "/store/best-post-workout-supplements.html",
+            viewAll: "/store/recovery.htm",
+            addProd: "/store/bodybuilding-com/signature-bcaa.html"
+        },
+        creatines: {
+            viewAllName: "Creatine",
+            source: "/store/best-creatine-supplements.html",
+            viewAll: "/store/creatine.html",
+            addProd: ""
+        },
+        fatburners: {
+            viewAllName: "Fat Burners",
+            source: "/store/best-fat-burner-supplements.html",
+            viewAll: "/store/ephfree.htm",
+            addProd: "/store/bodybuilding-com/signature-green-tea.html"
+        },
+        testboosters: {
+            viewAllName: "Test Boosters",
+            source: "/store/best-test-booster-supplements.html",
+            viewAll: "/store/goalanabolic.htm",
+            addProd: "/store/bodybuilding-com/signature-testosterone-booster.html"
+        },
+        multivitamins: {
+            viewAllName: "Multivitamins",
+            source: "/store/best-multivitamins.html",
+            viewAll: "/store/multi.html",
+            addProd: ""
+        },
+        accessories: {
+            viewAllName: "Accessories",
+            source: "/store/best-fitness-accessories.html",
+            viewAll: "/store/acc.htm",
+            addProd: ""
+        }
+    },
+    freeShipImg: "https://artifacts.bbcomcdn.com/bb-resources/2.3.0/free-shipping/free-shipping-with-orders-wrap.svg", //Free shipping image - can change here in case it changes again
+    vioTagImg: "https://artifacts.bbcomcdn.com/cms-app/3.1.15/i/bd7b6db14c26fa9d649619c75d960a3150f2b6c5.png", //Vio Tag image - can change here in case it changes again
+    salesSpecialsURL: "/store/coupons_promos.html", //Sales and Specials URL
+    topSellingURL: "/store/top50.htm", //Top Selling URL
+    topCatURL: "/store/type.htm", //Top Categories URL
+    topBrandsURL: "/store/listing.htm", //Top Brands URL
+    numOfTopSellingToShow: 10, //Number of Top Selling Products To Show In Carousel - Divisible by 6
+    euCountries: ["uk", "at", "be", "bg", "hr", "cy", "cz", "dk", "ee", "fi", "fr", "de", "gr", "hu", "ie", "it", "lv", "lt", "lu", "mt", "nl", "pl", "pt", "ro", "sk", "si", "es", "se"],
+    zone1Banner1FallbackImg: "https://www.bodybuilding.com/images/merchandising/january-2018/sales_specials_1200x400.jpg",
+    zone1Banner1FallbackLink: "https://www.bodybuilding.com/store/coupons_promos.html",
+    zone2Banner1FallbackImg: "https://www.bodybuilding.com/images/merchandising/january-2018/top_50_store_bnr_800x560.jpg",
+    zone2Banner1FallbackLink: "https://www.bodybuilding.com/store/top50.htm",
+    zone2Banner2FallbackImg: "https://www.bodybuilding.com/images/merchandising/january-2018/store_strongest_deals_banner_320x580.jpg", //FALL BACK IMAGE FOR SMALL BANNER IN SECOND BANNER SECTION
+    zone2Banner2FallbackLink: "/store/coupons_promos.html", //FALL BACK LINK FOR SMALL BANNER IN SECOND BANNER SECTION
+    zone3Banner1FallbackImg: "",
+    zone3Banner1FallbackLink: ""
+};
 //NO MORE CUSTOMIZATION BELOW THIS POINT
-var top10CarouselJS = document.querySelector('.js-top-ten-carousel'), //CONTAINER FOR ONLY TOP 10 CELLS
-    indexBannerTop = document.getElementById('index-banner-top'), //FIRST BANNER ANCHOR
+var indexBannerTop = document.getElementById('index-banner-top'), //FIRST BANNER ANCHOR
     indexBannerTopImg = indexBannerTop.getElementsByTagName('img')[0], //FIRST BANNER IMAGE
     indexBannerZone2Banner1 = document.getElementById('index-banner-mid-large'), //SECOND BANNER - LARGE - ANCHOR
     indexBannerZone2Banner1Img = indexBannerZone2Banner1.getElementsByTagName('img')[0], //SECOND BANNER - LARGE - IMAGE
@@ -178,6 +248,15 @@ var utilities = {
         }
         return true;
     },
+    setBanners : function () {
+        var screenw = window.innerWidth > 1000 ? countrySpecificData.desktop : countrySpecificData.mobile,
+            key;
+//        for (key in screenw) {
+//            
+//            console.log(key);
+//            console.log(screenw);
+//        }
+    },
     loadBanners : function () {
         var width = window.innerWidth,
             screenw;
@@ -186,109 +265,96 @@ var utilities = {
         } else {
             screenw = countrySpecificData.mobile;
         }
-        try {
-            if (screenw.zone1Banner1URL.length >= 1 || screenw.zone1Banner1Link.length >= 1) {
-                indexBannerTopImg.src = screenw.zone1Banner1URL; //SET URL FOR 1ST BANNER
-                indexBannerTop.setAttribute('href', screenw.zone1Banner1Link); //SET HREF FOR 1ST BANNER
-            } else {
-                indexBannerTopImg.src = indexOptions.zone1Banner1FallbackImg; //SET URL FOR 1ST BANNER
-                indexBannerTop.setAttribute('href', indexOptions.zone1Banner1FallbackLink); //SET HREF FOR 1ST BANNER
-                console.error("Applying Fallback Image For Banner 1 | Please Check User Inputed Code For Errors");
-            }
-        } catch (e) {
-            console.log("Error With Banner - indexBannerZone1 - Please Check Content Regions Are Correct in ExpMan");
+        if (screenw.zone1Banner1URL.length >= 1 || screenw.zone1Banner1Link.length >= 1) {
+            indexBannerTopImg.src = screenw.zone1Banner1URL; //SET URL FOR 1ST BANNER
+            indexBannerTop.setAttribute('href', screenw.zone1Banner1Link); //SET HREF FOR 1ST BANNER
+        } else {
+            indexBannerTopImg.src = indexOptions.zone1Banner1FallbackImg; //SET URL FOR 1ST BANNER
+            indexBannerTop.setAttribute('href', indexOptions.zone1Banner1FallbackLink); //SET HREF FOR 1ST BANNER
+            console.error("Applying Fallback Image For Banner 1 | Please Check User Inputed Code For Errors");
         }
-        try {
-            if (screenw.zone2Banner1URL.length >= 1 || screenw.zone2Banner1Link.length >= 1) {
-                indexBannerZone2Banner1Img.src = screenw.zone2Banner1URL; //SET URL FOR 2ND BANNER - LARGE
-                indexBannerZone2Banner1.setAttribute('href', screenw.zone2Banner1Link); //SET HREF FOR 2ND BANNER - LARGE
-            } else {
-                indexBannerZone2Banner1Img.src = indexOptions.zone2Banner1FallbackImg; //SET URL FOR 2ND BANNER - LARGE
-                indexBannerZone2Banner1.setAttribute('href', indexOptions.zone2Banner1FallbackLink); //SET HREF FOR 2ND BANNER - LARGE
-                console.error("Applying Fallback Image For Banner 2 - Large | Please Check User Inputed Code For Errors");
-            }
-        } catch (e) {
-            console.log("Error With Banner - indexBannerZone2 - Please Check Content Regions Are Correct in ExpMan");
+        if (screenw.zone2Banner1URL.length >= 1 || screenw.zone2Banner1Link.length >= 1) {
+            indexBannerZone2Banner1Img.src = screenw.zone2Banner1URL; //SET URL FOR 2ND BANNER - LARGE
+            indexBannerZone2Banner1.setAttribute('href', screenw.zone2Banner1Link); //SET HREF FOR 2ND BANNER - LARGE
+        } else {
+            indexBannerZone2Banner1Img.src = indexOptions.zone2Banner1FallbackImg; //SET URL FOR 2ND BANNER - LARGE
+            indexBannerZone2Banner1.setAttribute('href', indexOptions.zone2Banner1FallbackLink); //SET HREF FOR 2ND BANNER - LARGE
+            console.error("Applying Fallback Image For Banner 2 - Large | Please Check User Inputed Code For Errors");
         }
-        try {
-            if (screenw.zone2Banner2URL.length >= 1 || screenw.zone2Banner2Link.length >= 1) {
-                console.log(screenw.zone2Banner2URL);
-                indexBannerZone2Banner2Img.src = screenw.zone2Banner2URL;
-                indexBannerZone2Banner2.setAttribute('href', screenw.zone2Banner2Link);
-            } else { //IF THERE IS A USER INPUTED SMALL BANNER URL
-                indexBannerZone2Banner2Img.src = indexOptions.zone2Banner2FallbackImg; //SET URLS/PARAMETERS FOR 2ND BANNER - SMALL
-                indexBannerZone2Banner2.setAttribute('href', indexOptions.zone2Banner2FallbackLink);
-                console.error("Applying Fallback Image For Banner 2 - Small | Please Check User Inputed Code For Errors");
-            }
-        } catch (e) {
-            console.log("Error With Banner - indexBannerZone2 - Please Check Content Regions Are Correct in ExpMan");
+        if (screenw.zone2Banner2URL.length >= 1 || screenw.zone2Banner2Link.length >= 1) {
+            indexBannerZone2Banner2Img.src = screenw.zone2Banner2URL;
+            indexBannerZone2Banner2.setAttribute('href', screenw.zone2Banner2Link);
+        } else { //IF THERE IS A USER INPUTED SMALL BANNER URL
+            indexBannerZone2Banner2Img.src = indexOptions.zone2Banner2FallbackImg; //SET URLS/PARAMETERS FOR 2ND BANNER - SMALL
+            indexBannerZone2Banner2.setAttribute('href', indexOptions.zone2Banner2FallbackLink);
+            console.error("Applying Fallback Image For Banner 2 - Small | Please Check User Inputed Code For Errors");
         }
-        try {
-            if (screenw.zone3Banner1URL.length >= 1 || screenw.zone3Banner1Link.length >= 1) {
-                indexBannerZone3Banner1.src = screenw.zone3Banner1URL; //SET URL FOR 3RD BANNER
-                indexBannerZone3.setAttribute('href', screenw.zone3Banner1Link); //SET HREF FOR 3RD BANNER
-            } else {
-                indexBannerZone3Banner1.src = indexOptions.zone3Banner1FallbackImg; //SET URL FOR 3RD BANNER
-                indexBannerZone3.setAttribute('href', indexOptions.zone3Banner1FallbackLink); //SET HREF FOR 3RD BANNER
-                console.error("Applying Fallback Image For Banner 3 | Please Check User Inputed Code For Errors");
-            }
-        } catch (e) {
-            console.log("Error With Banner - indexBannerZone3 - Please Check Content Regions Are Correct in ExpMan");
+        if (screenw.zone3Banner1URL.length >= 1 || screenw.zone3Banner1Link.length >= 1) {
+            indexBannerZone3Banner1.src = screenw.zone3Banner1URL; //SET URL FOR 3RD BANNER
+            indexBannerZone3.setAttribute('href', screenw.zone3Banner1Link); //SET HREF FOR 3RD BANNER
+        } else {
+            indexBannerZone3Banner1.src = indexOptions.zone3Banner1FallbackImg; //SET URL FOR 3RD BANNER
+            indexBannerZone3.setAttribute('href', indexOptions.zone3Banner1FallbackLink); //SET HREF FOR 3RD BANNER
+            console.error("Applying Fallback Image For Banner 3 | Please Check User Inputed Code For Errors");
         }
+
     },
-    dataRequest: function (url, appendTo, type) { //MAKE AJAX CALLS TO GET INFO FROM PAGES
+    dataRequest: function (url, appendTo, type) { //MAKE CALLS TO GET INFO FROM PAGES
         //url - URL to get from
-        //appendTo - What Container to append to - Vanilla JS
+        //appendTo - What Container to append to
         //type - "Dynamic" = Pages with > 1 product on them, "Static" = Product Pages
         if (window.location.href.indexOf('127') >= 0 || window.location.href.indexOf('localhost') >= 0) {
             url = "https://www.bodybuilding.com" + url;
         }
-        var item, itemLength, //GENERAL VARIABLES
-            xhr = new XMLHttpRequest();
         try {
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    var data = JSON.parse(xhr.responseText);
-                    if (type === 'dynamic') { //DYNAMIC = TOP 10 PAGES, TOP 50 PAGES, ETC, ANY MAJOR PAGE WITH MORE THAN 1 PRODUCT ON IT
-                        item = data._embedded.item; //SEE PAGE JSON DATA TO FOLLOW THESE PATHS
-                        //ITEM.LENGTH CHECKS TO SEE HOW MANY OF PRODUCT ARE AVAILABLE TO SHOW
-                        if (item.length === 50) { //IF NUMBER IS EQUAL TO 50 (TOP 50 PAGE) SCRIPT CHOOSES THE USER ENTERED NUM OF PRODUCTS TO SHOW
-                            itemLength = indexOptions.numOfTopSellingToShow;
-                        } else { // IF NUMBER IS NOT 50 THEN IT REVERTS TO THE NUMBER OF PRODUCTS IN AJAX DATA
-                            itemLength = item.length;
-                        }
-                        for (i = 0; i < itemLength; i += 1) { //LOOP THROUGH ALL PRODUCT ITEMS IN RETRIEVED DATA
-                            if (item[i].hasOwnProperty('displayTitle')) { //MAKES SURE DATA ITEM HAS A PRODUCT NAME
-                                product = new GetProduct(item[i]);
-                                product.createCell(appendTo);
+            (function (i) {
+                var item, itemLength, //GENERAL VARIABLES
+                    xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        if (type === 'dynamic') { //DYNAMIC = TOP 10 PAGES, TOP 50 PAGES, ETC, ANY MAJOR PAGE WITH MORE THAN 1 PRODUCT ON IT
+                            item = data._embedded.item; //SEE PAGE JSON DATA TO FOLLOW THESE PATHS
+                            //ITEM.LENGTH CHECKS TO SEE HOW MANY OF PRODUCT ARE AVAILABLE TO SHOW
+                            if (item.length === 50) { //IF NUMBER IS EQUAL TO 50 (TOP 50 PAGE) SCRIPT CHOOSES THE USER ENTERED NUM OF PRODUCTS TO SHOW
+                                itemLength = indexOptions.numOfTopSellingToShow;
+                            } else { // IF NUMBER IS NOT 50 THEN IT REVERTS TO THE NUMBER OF PRODUCTS IN DATA
+                                itemLength = item.length;
                             }
+                            for (i = 0; i < itemLength; i += 1) { //LOOP THROUGH ALL PRODUCT ITEMS IN RETRIEVED DATA
+                                if (item[i].hasOwnProperty('displayTitle')) { //MAKES SURE DATA ITEM HAS A PRODUCT NAME
+                                    product = new GetProduct(item[i]);
+                                    product.createCell(appendTo);
+                                }
+                            }
+                            var dynamicCarousel = new Carousel({
+                                appendTo: ".js-top-ten-carousel",
+                                cellsToShow: 4,
+                                slidesPerClick: 4,
+                                mobileAt: "918px",
+                                dots: true
+                            });
+                        } else if (type === 'static') { //STATIC = PRODUCT PAGES
+                            item = data; //SEE PAGE JSON DATA TO FOLLOW THESE PATHS
+                            product = new GetProduct(item);
+                            product.createCell(appendTo);
                         }
-                        var dynamicCarousel = new Carousel({
-                            appendTo: ".js-top-ten-carousel",
-                            cellsToShow: 4,
-                            slidesPerClick: 4,
-                            mobileAt: "918px",
-                            dots: true
-                        });
-                    } else if (type === 'static') { //STATIC = PRODUCT PAGES
-                        item = data; //SEE PAGE JSON DATA TO FOLLOW THESE PATHS
-                        product = new GetProduct(item);
-                        product.createCell(appendTo);
                     }
-                }
-            };
-            xhr.open("GET", url, false);
-            xhr.setRequestHeader("Accept", "application/hal+json");
-            xhr.setRequestHeader("BB-App", "marketing, 1.0.0");
-            xhr.send(null);
+                };
+                xhr.open("GET", url);
+                xhr.setRequestHeader("Accept", "application/hal+json");
+                xhr.setRequestHeader("BB-App", "marketing, 1.0.0");
+                xhr.send(null);
+            }(i));
         } catch (e) {
             console.log('Error With Data Request');
         }
     }
 };
 (function () { //RUN RIGHT AWAY
+    utilities.setBanners();
     utilities.loadBanners();
-
+    
     document.querySelector('.js-sales-specials-link').setAttribute('href', indexOptions.salesSpecialsURL); //SET URLS FOR SALES/SPECIALS LINKS
     document.querySelector('.js-top-selling-link').setAttribute('href', indexOptions.topSellingURL); //SET TOP SELLING LINKS
     document.querySelector('.js-top-categories-link').setAttribute('href', indexOptions.topCatURL); //SET TOP CATEGORIES LINKS
